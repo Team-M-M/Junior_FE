@@ -1,8 +1,36 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '@/styles/Home.module.css';
+import { ComponentProps, MouseEvent, useState } from 'react';
 
 export default function Home() {
+  const [id, setId] = useState<string>('');
+  const [pw, setPw] = useState<string>('');
+  const [errorId, setErrorId] = useState<string>('');
+  const [errorPw, setErrorPw] = useState<string>('');
+
+  const handleChangeId: ComponentProps<'input'>['onChange'] = (event) => {
+    const value = event.target.value;
+    setId(value);
+  };
+
+  const handleChangePw: ComponentProps<'input'>['onChange'] = (event) => {
+    const value = event.target.value;
+    setPw(value);
+  };
+
+  function handleClickLogin() {
+    if (id === '') {
+      setErrorId('! 아이디를 정확히 입력해 주세요.');
+    }
+    if (pw === '') {
+      setErrorPw('! 비밀번호를 정확히 입력해 주세요.');
+    }
+    if (id !== '' && pw !== '') {
+      alert('아이디와 비밀번호가 모두 입력되었습니다. 로그인을 시작합니다.');
+    }
+  }
+
   return (
     <>
       <Head>
@@ -13,26 +41,17 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
           <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+            <h1>로그인</h1>
+            <div>아이디 {id}</div>
+            <input type="text" onChange={handleChangeId} />
+            <div style={{ color: 'red' }}>{errorId}</div>
+            <div>비밀번호 {pw}</div>
+            <input type="text" onChange={handleChangePw} />
+            <div style={{ color: 'red' }}>{errorPw}</div>
+            <div>
+              <button onClick={handleClickLogin}>로그인</button>
+            </div>
           </div>
         </div>
 
