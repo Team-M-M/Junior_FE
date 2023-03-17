@@ -9,6 +9,8 @@ export default function Home() {
   const [errorId, setErrorId] = useState<string>('');
   const [errorPw, setErrorPw] = useState<string>('');
 
+  const [count, setCount] = useState<number>(0);
+
   const handleChangeId: ComponentProps<'input'>['onChange'] = (event) => {
     const value = event.target.value;
     setId(value);
@@ -30,6 +32,18 @@ export default function Home() {
       alert('아이디와 비밀번호가 모두 입력되었습니다. 로그인을 시작합니다.');
     }
   }
+
+  const handleCountUp: ComponentProps<'button'>['onClick'] = () => {
+    setCount((pre) => pre + 1);
+  };
+
+  const handleCountDown: ComponentProps<'button'>['onClick'] = () => {
+    if (count > 0) {
+      setCount((pre) => pre - 1);
+    } else {
+      alert('count가 0보다 작습니다.');
+    }
+  };
 
   return (
     <>
@@ -53,6 +67,12 @@ export default function Home() {
               <button onClick={handleClickLogin}>로그인</button>
             </div>
           </div>
+        </div>
+
+        <div>
+          <div>{count}</div>
+          <button onClick={handleCountUp}>Plus</button>
+          <button onClick={handleCountDown}>Minus</button>
         </div>
 
         <div className={styles.center}>
